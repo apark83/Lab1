@@ -1,0 +1,16 @@
+Package: Lab1
+Type: Package
+Title: Descriptive Statistics and Formulae for Multivariate Statistics
+Version: 0.1.0
+Author: Austin Parker
+Maintainer: Austin Parker <apark12@icloud.com>
+Description: This package contains all material for lab 1
+    Use four spaces when indenting paragraphs within the Description.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.0.2
