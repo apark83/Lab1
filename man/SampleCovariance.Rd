@@ -4,12 +4,10 @@
 \alias{SampleCovariance}
 \title{Sample Covariance Function}
 \usage{
-SampleCovariance(
-  X = matrix(c(15, 40, 37, 31, 19, 47, 45, 74, 16), nrow = 3, ncol = 3, byrow = TRUE)
-)
+SampleCovariance(X)
 }
 \arguments{
-\item{X}{}
+\item{X}{amn input matrix of size (n x p)}
 }
 \value{
 a matrix of covariance

@@ -12,7 +12,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Sample Mean Function, $\bar x$
+# 2. Build Descriptive Statistics Functions
+
+## Sample Mean Function, $\bar x$
 
 ```{r}
 SampleMean = function(x = matrix(0:8,nrow = 3, ncol = 3, byrow = TRUE)){       # default matrix "x" for function
@@ -32,17 +34,17 @@ SampleMean = function(x = matrix(0:8,nrow = 3, ncol = 3, byrow = TRUE)){       #
   # Calculates the sample mean for each column  
     xbar = 1/n * col.sum
     print(xbar)
-    print(x)
 }
 
 SampleMean()
 ```
 
-# Sample Covariance Matrix, $s_{jk}$
+## Sample Covariance Matrix, $s_{ik}$
 
 ```{r}
-SampleCovariance = function(X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)) {      # create default matrix for function
-
+SampleCovariance = function(X) {
+  X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)      # create default matrix for function
+  
     n=nrow(X)
     p=ncol(X)
 
@@ -69,11 +71,12 @@ SampleCovariance = function(X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, 
 
 SampleCovariance()
 
+  X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)
 
 cov(X)
 ```
 
-# Dr. Stewart's way of Sample Correlation
+## Dr. Stewart's way of Sample Correlation
 
 ```{r, eval = FALSE}
 S.kk = function(X <- matrix(1:4, nrow = 2, ncol = 2)){      # create default matrix for function
@@ -179,7 +182,7 @@ cov(X)
 ```
 
 
-# Sample Correlation Matrix, 
+## Sample Correlation Matrix, $r_{ik}$
 
 ```{r}
 SampleCorrelation = function(X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)) {      # create default matrix for function
@@ -221,4 +224,117 @@ SampleCorrelation()
 cor(X)
 ```
 
+# Latex Formulae
+
+## a. 
+
+### i. Sample mean $\bar{x}_{k}$
+
+$$  \bar{x}_k = \frac{1}{n} \sum_{j=1}^{n}{x_{jk}} \quad k=1,2,...,p$$
+
+### ii. Sample Covariance $s_{ik}$
+
+$$ s_{ik} = \frac{1}{n} \sum_{j=1}^{n} (x_{ji} - \bar{x}_i)(x_{jk}- \bar{x}_k) \quad i=1,2,...,p, \quad k=1,2,...,p$$
+
+### iii. Sample Correlation $r_{ik}$
+
+$$ r_{ik} = \frac{s_{ik}}{\sqrt{s_{ii}}\sqrt{s_{kk}}} = \frac{ \sum_{j=1}^{n} (x_{ji} - \bar{x}_i)(x_{jk}- \bar{x}_k)} { \sqrt{\sum_{j=1}^{n} (x_{ji} - \bar{x}_i)^2} \sqrt{\sum_{j=1}^{n} (x_{jk} - \bar{x}_k)^2}} $$
+
+## b. Matrix Operations
+
+### i. Sample Mean
+
+$$ \bar{\textbf{x}} = \frac{1}{n} \textbf{X}'\textbf{1}$$
+
+### ii. Sample Correlation
+
+$$ \textbf{S} = \frac{1}{n-1} \textbf{X}' \big( \textbf{1} - \frac{1}{n} \textbf{11}' \big) \textbf{X}$$
+
+## c. Sample Correlation Matrix 
+
+$$
+\textbf{D}^{1/2}_{(p \times p)} = 
+\begin{bmatrix}
+  \sqrt{s_{11}} & 0 & \ldots & 0 \\
+  0 & \sqrt{s_{22}} & \ldots & 0 \\
+  \vdots & \vdots & \ddots & \vdots \\
+  0 & 0 & \ldots & \sqrt{s_{pp}}
+\end{bmatrix}
+$$
+
+$$
+\textbf{D}^{-1/2}_{(p \times p)} = 
+\begin{pmatrix}
+  \frac{1}{\sqrt{s_{11}}} & 0 & \ldots & 0 \\
+  0 & \frac{1}{\sqrt{s_{22}}} & \ldots & 0 \\
+  \vdots & \vdots & \ddots & \vdots \\
+  0 & 0 & \ldots & \frac{1}{\sqrt{s_{pp}}}
+\end{pmatrix}
+$$
+
+
+$$
+\textbf{S} = 
+\begin{pmatrix}
+  s_{11} & s_{12} & \ldots & s_{1p} \\
+  \vdots & \vdots & \ddots & \vdots \\
+  s_{1p} & s_{2p} & \ldots & s_{pp}
+\end{pmatrix}
+$$
+
+
+$$
+\textbf{R} = 
+\begin{bmatrix}
+  \frac{s_{11}}{\sqrt{s_{11}}\sqrt{s_{11}}} & \frac{s_{12}}{\sqrt{s_{11}}\sqrt{s_{22}}} & \ldots & \frac{s_{1p}}{\sqrt{s_{11}}\sqrt{s_{pp}}} \\
+  \vdots & \vdots & \ddots & \vdots \\
+ \frac{s_{1p}}{\sqrt{s_{11}}\sqrt{s_{pp}}} & \frac{s_{2p}}{\sqrt{s_{22}}\sqrt{s_{pp}}} & \ldots & \frac{s_{pp}}{\sqrt{s_{pp}}\sqrt{s_{pp}}}
+\end{bmatrix}
+=
+\begin{bmatrix}
+  1 & r_{12} & \ldots & r_{1p} \\
+  \vdots & \vdots & \ddots & \vdots \\
+  r_{1p} & r_{2p} & \ldots & 1
+\end{bmatrix}
+$$
+
+## d. Sample Correlation Simplified
+
+$$
+\textbf{R} = \textbf{D}^{-1/2} \textbf{S} \textbf{D}^{-1/2}
+$$
+
+# 5. Table 1.2 Calculations
+Complete using my functions
+
+## Load Table
+
+```{r}
+table1.2 <- read.table("/Users/austinparker/Documents/Classes/Math 4793/Labs/Lab 1/T1-2.DAT")
+names(table1.2) <- c("Density", "Machine Direction", "Cross Direction")
+table1.2
+```
+
+
+## Sample Means
+
+```{r}
+SampleMean(table1.2)
+```
+
+## Sample Covariance
+
+```{r}
+SampleCovariance(table1.2)
+
+cov(table1.2)
+```
+
+## Sample Correlation
+
+```{r}
+SampleCorrelation(table1.2)
+
+cor(table1.2)
+```
 

@@ -1,6 +1,11 @@
 ---
 title: "Lab1-vignette"
-output: rmarkdown::html_vignette
+author: "Austin Parker"
+date: "`r Sys.Date()`"
+output:
+rmarkdown::html_vignette:
+  toc: true
+  toc_float: true
 vignette: >
   %\VignetteIndexEntry{Lab1-vignette}
   %\VignetteEngine{knitr::rmarkdown}

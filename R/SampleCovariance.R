@@ -1,14 +1,15 @@
 #' Sample Covariance Function
 #'
 #' Takes a matrix and returns a covariance matrix
-#' @param X
+#' @param X amn input matrix of size (n x p)
 #'
 #' @return a matrix of covariance
 #' @export
 #'
 #' @examples
 #' X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE): SampleCovariance(X)
-SampleCovariance = function(X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)) {      # create default matrix for function
+SampleCovariance = function(X) {
+  X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)      # create default matrix for function
 
   n=nrow(X)
   p=ncol(X)
