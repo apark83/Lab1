@@ -24,10 +24,254 @@ library(Lab1)
 ```
 
 # 2. My Descriptive Statistical Fucntions
+***
+## Sample Mean Function, $\bar x$
+This fucntion returns the sample column means, $\bar x_k$, for a given matrix, $\textbf{X}$
 
+```{r}
+SampleMean = function(X) {
+  X = matrix(0:8,nrow = 3, ncol = 3, byrow = TRUE)       # default matrix "x" for function
+
+  # print(x)
+
+  n = nrow(X)      # define the number of rows in matrix x
+
+  # Sums the columnd and rows
+  col.sum = apply(X, 2, sum)
+  # row.sum = apply(x, 1, sum)
+
+  # Adds sums to original matrix (not necessary)
+  # x <- cbind(x, Rsum = row.sum)
+  # x <- rbind(x, Csum = c(col.sum, sum(col.sum)))
+  # print(x)
+
+  # Calculates the sample mean for each column
+  xbar = 1/n * col.sum
+  print(xbar)
+}
+
+X = matrix(0:8,nrow = 3, ncol = 3, byrow = TRUE)
+  print(X)
+
+SampleMean()
+```
+
+## Sample Covariance Matrix, $s_{ik}$
+This fucntion returns the sample covariance matrix, $\textbf s_{kk}$,  for a given matrix, $\textbf{X}$
+
+
+```{r}
+SampleCovariance = function(X) {
+  X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)      # create default matrix for function
+  
+    n=nrow(X)
+    p=ncol(X)
+
+    sums=apply(X, MARGIN = 2, FUN=sum) #sum of measurements for each variable
+    xbar=(1/n)*sums
+
+    s <- matrix(NA, nrow = p, ncol = p)  # create matrix with same dimensions as input matrix
+    v <- vector(mode = "numeric", length = n)
+
+    for (i in 1:p) {
+      for (k in 1:p) {
+        for (j in 1:n) {
+          v[j] <- (X[j,i] - xbar[i]) * (X[j,k] - xbar[k])
+        }
+    
+        s[i,k] <- 1/(n-1) * sum(v)
+      }
+  
+    
+    }
+    print(s)
+}
+
+X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)
+  print(X)
+
+SampleCovariance()
+
+
+cov(X)
+```
+
+## Sample Correlation Matrix, $r_{ik}$
+This fucntion returns the sample correlation matrix, $\textbf r_{kk}$, for a given matrix, $\textbf{X}$
+
+
+```{r}
+SampleCorrelation = function(X) {
+  X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)
+
+    n=nrow(X)
+    p=ncol(X)
+  
+    sums=apply(X, MARGIN = 2, FUN=sum) #sum of measurements for each variable
+    xbar=(1/n)*sums
+  
+    s <- matrix(NA, nrow = p, ncol = p)  # create matrix with same dimensions as input matrix
+    r <- matrix(NA, nrow = p, ncol = p)  # create matrix with same dimensions as input matrix
+    v <- vector(mode = "numeric", length = n)
+  
+    for (i in 1:p) {
+      for (k in 1:p) {
+        for (j in 1:n) {
+          v[j] <- (X[j,i] - xbar[i]) * (X[j,k] - xbar[k])
+        }
+  
+        s[i,k] <- 1/(n-1) * sum(v)
+      }
+    }
+  
+    for (i in 1:p) {
+      for (k in 1:p) {
+        r[i,k] <- s[i,k] / (sqrt(s[i,i]) * sqrt(s[k,k]))
+        # the code below helps diagnose the problem of inserting the line above from filling in the matrix "r" (k,k) k=2 is need for r_{1,2}, but won't be defined for another 3 loops
+        # print(c(i,k))
+        # print(r)
+      }
+    }
+    print(r)
+}
+
+X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)
+  print(X)
+
+SampleCorrelation()
+
+cor(X)
+```
 
 # 3. Links
+***
 
 [Vignette Help](http://r-pkgs.had.co.nz/vignettes.html)
 
+[Vignette Detailed Hlep]
+
 [My repository](https://github.com/apark83/Lab1)
+
+# Latex Formulae
+***
+
+## a. 
+
+Sample mean, $\bar{x}_{k}$
+
+$$  \bar{x}_k = \frac{1}{n} \sum_{j=1}^{n}{x_{jk}} \quad k=1,2,...,p$$
+
+Sample Covariance, $s_{kk}$
+
+$$ s_{ik} = \frac{1}{n} \sum_{j=1}^{n} (x_{ji} - \bar{x}_i)(x_{jk}- \bar{x}_k) \quad i=1,2,...,p, \quad k=1,2,...,p$$
+
+Sample Correlation, $r_{ik}$
+
+$$ r_{ik} = \frac{s_{ik}}{\sqrt{s_{ii}}\sqrt{s_{kk}}} = \frac{ \sum_{j=1}^{n} (x_{ji} - \bar{x}_i)(x_{jk}- \bar{x}_k)} { \sqrt{\sum_{j=1}^{n} (x_{ji} - \bar{x}_i)^2} \sqrt{\sum_{j=1}^{n} (x_{jk} - \bar{x}_k)^2}} $$
+
+## b. Matrix Operations
+
+Sample Mean, $\bar {\textbf x}$
+
+$$ \bar{\textbf{x}} = \frac{1}{n} \textbf{X}'\textbf{1}$$
+
+Sample Correlation, $\textbf S$
+
+$$ \textbf{S} = \frac{1}{n-1} \textbf{X}' \big( \textbf{1} - \frac{1}{n} \textbf{11}' \big) \textbf{X}$$
+
+Sample Correlation Matrix, $\textbf{R} = \textbf{D}^{-1/2} \textbf{S} \textbf{D}^{-1/2}$
+
+$$
+\textbf{D}^{1/2}_{(p \times p)} = 
+\begin{bmatrix}
+  \sqrt{s_{11}} & 0 & \ldots & 0 \\
+  0 & \sqrt{s_{22}} & \ldots & 0 \\
+  \vdots & \vdots & \ddots & \vdots \\
+  0 & 0 & \ldots & \sqrt{s_{pp}}
+\end{bmatrix}
+$$
+Then
+$$
+\textbf{D}^{-1/2}_{(p \times p)} = 
+\begin{bmatrix}
+  \frac{1}{\sqrt{s_{11}}} & 0 & \ldots & 0 \\
+  0 & \frac{1}{\sqrt{s_{22}}} & \ldots & 0 \\
+  \vdots & \vdots & \ddots & \vdots \\
+  0 & 0 & \ldots & \frac{1}{\sqrt{s_{pp}}}
+\end{bmatrix}
+$$
+Since
+$$
+\textbf{S} = 
+\begin{bmatrix}
+  s_{11} & s_{12} & \ldots & s_{1p} \\
+  \vdots & \vdots & \ddots & \vdots \\
+  s_{1p} & s_{2p} & \ldots & s_{pp}
+\end{bmatrix}
+$$
+
+and
+$$
+\textbf{R} = 
+\begin{bmatrix}
+  \frac{s_{11}}{\sqrt{s_{11}}\sqrt{s_{11}}} & \frac{s_{12}}{\sqrt{s_{11}}\sqrt{s_{22}}} & \ldots & \frac{s_{1p}}{\sqrt{s_{11}}\sqrt{s_{pp}}} \\
+  \vdots & \vdots & \ddots & \vdots \\
+ \frac{s_{1p}}{\sqrt{s_{11}}\sqrt{s_{pp}}} & \frac{s_{2p}}{\sqrt{s_{22}}\sqrt{s_{pp}}} & \ldots & \frac{s_{pp}}{\sqrt{s_{pp}}\sqrt{s_{pp}}}
+\end{bmatrix}
+=
+\begin{bmatrix}
+  1 & r_{12} & \ldots & r_{1p} \\
+  \vdots & \vdots & \ddots & \vdots \\
+  r_{1p} & r_{2p} & \ldots & 1
+\end{bmatrix}
+$$
+
+we have Sample Correlation Simplified, $\textbf{R}$
+
+$$
+\textbf{R} = \textbf{D}^{-1/2} \textbf{S} \textbf{D}^{-1/2}
+$$
+
+# 5. Table 1.2 Calculations
+***
+Complete using my functions
+
+## Load Table
+
+```{r}
+table1.2 <- read.table("/Users/austinparker/Documents/Classes/Math 4793/Labs/Lab 1/T1-2.DAT")
+names(table1.2) <- c("Density", "Machine Direction", "Cross Direction")
+table1.2
+```
+
+
+## Sample Means
+
+```{r}
+SampleMean(table1.2)
+```
+
+## Sample Covariance
+
+```{r}
+SampleCovariance(table1.2)
+
+cov(table1.2)
+```
+
+## Sample Correlation
+
+```{r}
+SampleCorrelation(table1.2)
+
+cor(table1.2)
+```
+
+# 7. Assessment of this course
+***
+1. Clicker quiz each class and lab (Total 10%)
+1. 4 assignments (20% Total)
+1. Laboratories (10% Total)
+1. 2 exams (10% each, Total 20%)
+1. 2(4793) projects (10%)
+1. 1 final (30%)

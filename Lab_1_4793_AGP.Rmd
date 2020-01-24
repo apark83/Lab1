@@ -17,24 +17,29 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Sample Mean Function, $\bar x$
 
 ```{r}
-SampleMean = function(x = matrix(0:8,nrow = 3, ncol = 3, byrow = TRUE)){       # default matrix "x" for function
+SampleMean = function(X) {
+  X = matrix(0:8,nrow = 3, ncol = 3, byrow = TRUE)       # default matrix "x" for function
+
   # print(x)
-  
-    n = nrow(x)      # define the number of rows in matrix x
-  
+
+  n = nrow(X)      # define the number of rows in matrix x
+
   # Sums the columnd and rows
-    col.sum = apply(x, 2, sum) 
-    # row.sum = apply(x, 1, sum)
-  
-        # Adds sums to original matrix (not necessary)
-          # x <- cbind(x, Rsum = row.sum)
-          # x <- rbind(x, Csum = c(col.sum, sum(col.sum)))
-          # print(x)
-  
-  # Calculates the sample mean for each column  
-    xbar = 1/n * col.sum
-    print(xbar)
+  col.sum = apply(X, 2, sum)
+  # row.sum = apply(x, 1, sum)
+
+  # Adds sums to original matrix (not necessary)
+  # x <- cbind(x, Rsum = row.sum)
+  # x <- rbind(x, Csum = c(col.sum, sum(col.sum)))
+  # print(x)
+
+  # Calculates the sample mean for each column
+  xbar = 1/n * col.sum
+  print(xbar)
 }
+
+X = matrix(0:8,nrow = 3, ncol = 3, byrow = TRUE)
+  print(X)
 
 SampleMean()
 ```
@@ -68,10 +73,11 @@ SampleCovariance = function(X) {
     print(s)
 }
 
+X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)
+  print(X)
 
 SampleCovariance()
 
-  X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)
 
 cov(X)
 ```
@@ -185,39 +191,42 @@ cov(X)
 ## Sample Correlation Matrix, $r_{ik}$
 
 ```{r}
-SampleCorrelation = function(X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)) {      # create default matrix for function
-
+SampleCorrelation = function(X) {
+  X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)
 
     n=nrow(X)
     p=ncol(X)
-
+  
     sums=apply(X, MARGIN = 2, FUN=sum) #sum of measurements for each variable
     xbar=(1/n)*sums
-
+  
     s <- matrix(NA, nrow = p, ncol = p)  # create matrix with same dimensions as input matrix
     r <- matrix(NA, nrow = p, ncol = p)  # create matrix with same dimensions as input matrix
     v <- vector(mode = "numeric", length = n)
-
+  
     for (i in 1:p) {
       for (k in 1:p) {
         for (j in 1:n) {
           v[j] <- (X[j,i] - xbar[i]) * (X[j,k] - xbar[k])
         }
-        
+  
         s[i,k] <- 1/(n-1) * sum(v)
       }
     }
-    
+  
     for (i in 1:p) {
       for (k in 1:p) {
         r[i,k] <- s[i,k] / (sqrt(s[i,i]) * sqrt(s[k,k]))
         # the code below helps diagnose the problem of inserting the line above from filling in the matrix "r" (k,k) k=2 is need for r_{1,2}, but won't be defined for another 3 loops
-          # print(c(i,k))
-          # print(r)
+        # print(c(i,k))
+        # print(r)
       }
     }
     print(r)
 }
+
+X = matrix(c(15,40,37,31,19,47,45,74,16), nrow = 3, ncol = 3, byrow = TRUE)
+  print(X)
 
 SampleCorrelation()
 
