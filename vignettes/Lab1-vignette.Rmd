@@ -148,8 +148,6 @@ cor(X)
 
 [Vignette Help](http://r-pkgs.had.co.nz/vignettes.html)
 
-[Vignette Detailed Hlep]
-
 [My repository](https://github.com/apark83/Lab1)
 
 # Latex Formulae
