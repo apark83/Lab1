@@ -1,7 +1,7 @@
 #' Sample Covariance Function
 #'
 #' Takes a matrix and returns a covariance matrix
-#' @param X amn input matrix of size (n x p)
+#' @param X an input matrix of size (n x p)
 #'
 #' @return a matrix of covariance
 #' @export
