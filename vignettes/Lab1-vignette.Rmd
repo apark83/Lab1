@@ -1,5 +1,5 @@
 ---
-title: "Lab1-vignette"
+title: "Lab1-Vignette"
 author: "Austin Parker"
 date: "`r Sys.Date()`"
 output:
@@ -22,3 +22,12 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(Lab1)
 ```
+
+# 2. My Descriptive Statistical Fucntions
+
+
+# 3. Links
+
+[Vignette Help](http://r-pkgs.had.co.nz/vignettes.html)
+
+[My repository](https://github.com/apark83/Lab1)

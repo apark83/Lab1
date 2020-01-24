@@ -7,7 +7,7 @@
 SampleCovariance(X)
 }
 \arguments{
-\item{X}{amn input matrix of size (n x p)}
+\item{X}{an input matrix of size (n x p)}
 }
 \value{
 a matrix of covariance
